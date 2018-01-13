@@ -1,0 +1,797 @@
+1.jquery API
+
+设置节点属性   .attr
+设置节点style  .css
+添加class      .addClass
+移除class      .removeClass
+得到设置属性   .val
+删除节点       .remove
+添加节点       .appendTo
+替代           .replaceWith
+
+ajax           .get
+	       .post
+
+2.匿名函数
+
+(function(x,y){alert(x+y)})(2,3)
++function(x,y){alert(x+y)}(2,3)
+
+3.页面加载完成之后执行js
+
+window.onload = function() { };
+$(document).ready(function() { };
+
+4.如何优化页面
+
+  1.压缩CSS和JavaScript代码
+  2.使用 CSS Sprites 整合图像
+  3.利用浏览器缓存
+  4.把CSS文件放在页面顶部，而JS文件放在底部
+  5.最小化重定向
+  6.减少DOM操作，避免回调地狱
+5.四大浏览器内核
+
+Trident/IE内核
+Gecko/Firefox内核
+WebKit:Safari内核
+Presto:Opera内核
+
+6.ng和vue各自的优缺点
+
+  vue
+  API设计上简单，语法简单，学习成本低
+  构建方面不包含路由和ajax功能，使用vuex, vue-router
+  指令（dom）和组件（视图，数据，逻辑）处理清晰
+  性能好，容易优化
+  基于依赖追踪的观察系统，并且异步队列更新
+  独立触发
+  v-model 实时渲染
+
+  适用于：模板和渲染函数的弹性选择
+  简单的语法及项目搭建
+  更快的渲染速度和更小的体积
+
+  angular
+  优点
+
+  angularjs是一套完整的框架，angular有自带的数据绑定、render渲染、angularUI  库,过滤器,directive(模板),服务q(defer),http，inject(依赖注入),factory,provider……，等等一系列工具，基本上只要你在做web开发用过的东  西，它都有一个。但是这些东西React自身都没有。
+
+  Angularjs的架构清晰，分工明确，扩展性良好，model，view，controller谁在什么  时候做什么事情说的很清楚，angular能够让程序员真正专注于业务逻辑，而且因为  对html侵入不大，非常易于和designer协作。整个框架充满了DI的思路，耦合性非常低，对象都是被inject的，也就是说每个对象都可以轻易被替换而不影响其他对象。
+
+  Angular生产效率高，单向数据流什么的想法非常好，但是写起来太麻烦！我只想变  更个很简单的数据还要经过action、dispatcher、reduce、view四步，angular里一  行代码就搞定的事情在react里却如此麻烦
+
+  缺点
+
+  性能
+  双向数据绑定是一把双刃剑。随着组件增加，项目越来越复杂，双向数据绑定带来性  能问题。
+  双向数据绑定是如何影响性能的？在JavaScript（ES5）中，并没有实现当变量或对  象改变时发出通知的功能，Angular的实现方法被叫做“Dirty-checking（脏检查机  制）”，通过跟踪数据的改变再动态更新用户界面（UI）。
+  在Angular的作用域中任何操作的执行都会引发Dirty-checking，随着绑定数量的增  加性能就会越低。
+  Angular 2.0推翻重做使得目前不宜采用此框架
+  Angular 1.x版本其实是个比较旧的东西了，现在看来有些理念过时了，比如依赖注  入、自己独特的模块化，这些东西其实在ES6下已经很好地被解决了。
+  Angular的2.0几乎是一个推翻重做的框架，估计不会有1.X的upgrade方案。所以如果  现在新开始的项目采用Angular的话，会是一个很尴尬的时机。同样，如此大的改动  似乎也反面印证了1.X并不是那么好。
+  学习成本高
+  使用Angular需要学习大量的概念，包括但不限于：
+  模块
+  控制器
+  指令
+  作用域
+  模板
+  链式函数
+  过滤器
+  依赖注入
+
+7.ajax怎么配置
+  异步变同步
+  async: false
+
+   jQuery.ajax({
+            type: "post",
+	    data:
+            url: url,
+            success: function(data){
+                if(data=='1'){
+                    same=true;
+                }
+            }
+        });
+
+   js ajax 请求过程：创建 XMLHttpRequest 对象、连接服务器、发送请求、接收响应数据；
+
+8.http的原理
+  （1）客户端连接到Web服务器
+  （2）发送HTTP请求
+  （3）服务器接受请求并返回HTTP响应
+  （4）释放连接TCP连接
+  （5）客户端浏览器解析HTML内容
+
+9.sessionStorage 、localStorage 和 cookie 之间的区别
+  共同点：都是保存在浏览器端，且同源的。
+  区别：
+       1.cookie数据始终在同源的http请求中携带（即使不需要），即cookie在浏览器和服务器间来回传递。
+而sessionStorage和localStorage不会自动把数据发给服务器，仅在本地保存。
+cookie数据还有路径（path）的概念，可以限制cookie只属于某个路径下。
+       2.存储大小限制也不同，cookie数据不能超过4k，同时因为每次http请求都会携带cookie
+，所以cookie只适合保存很小的数据，如会话标识。
+sessionStorage和localStorage 虽然也有存储大小的限制，但比cookie大得多，可以达到5M或更大。
+       3.数据有效期不同，sessionStorage：仅在当前浏览器窗口关闭前有效，
+自然也就不可能持久保持；localStorage：始终有效，窗口或浏览器关闭也一直保存，因此用作持久数据；cookie只在设置的cookie过期时间之前一直有效，即使窗口或浏览器关闭。
+       4.作用域不同，sessionStorage不在不同的浏览器窗口中共享，即使是同一个页面；
+localStorage 在所有同源窗口中都是共享的；cookie也是在所有同源窗口中都是共享的。
+
+
+10.用原型链的方式给Array对象添加一个数组去重的方法
+  var arr=[10,20,20,30,10];
+  Array.prototype.n=function(){
+	console.log(this);
+	var noarray=new Array();
+	this.forEach(function(v,i){
+		if(noarray.indexOf(v)===-1){
+			noarray.push(v);
+		}
+	});
+	return noarray;
+  }
+  console.log(arr.n());
+
+11.js两种数据类型的区别
+
+常见的基本数据类型：
+Number、String 、Boolean、Null和Undefined
+
+引用类型数据：
+也就是对象类型Object type，比如：Object 、Array 、Function 、Data等。
+
+基本数据类型指的是简单的数据段，引用数据类型指的是有多个值构成的对象。
+
+12.js怎么实现继承
+
+js原型（prototype）实现继承
+复制代码 代码如下:
+
+<SPAN style="BACKGROUND-COLOR: #ffffff"><SPAN style="FONT-SIZE: 18px"><html>
+<body>
+<script type="text/javascript">
+    function Person(name,age){
+        this.name=name;
+        this.age=age;
+    }
+    Person.prototype.sayHello=function(){
+        alert("使用原型得到Name："+this.name);
+    }
+    var per=new Person("马小倩",21);
+    per.sayHello(); //输出：使用原型得到Name:马小倩
+
+13.call和apply有什么区别
+
+相同点:两个方法产生的作用是完全一样的，第一个参数都是对象；
+
+
+不同点:从第二个参数起
+
+call()方法参数将依次传递给借用的方法作参数，即fn.call(thisobj, arg1,arg2,arg3...argn)，有n个参数
+
+apply()方法第一个参数是对象，第二个参数是数组fn.apply(thisobj,arg)，此处的arg是一个数组,只有两个参数
+
+
+call, apply作用就是借用别人的方法来调用,就像调用自己的一样.（把this给了传入的对象）
+
+14.ng自定义组件的运用
+
+1、创建和使用
+var app = angular.module('myApp',['ng']);
+app.directive('指令名称',func);
+
+
+自定义指令的命名：
+驼峰式，有两部分构成，前缀一般是公司或者项目的缩写，后缀表示的为指令的作用(tsHello)
+使用指令时：采用烤串式的方式去使用
+(ts-hello)
+
+2、高级
+
+属性：
+①template 显示的模板内容
+②restrict: 'EACM' (E:元素A:属性C:类M：注释)
+作为注释去调用自定义指令时，需要设置replace属性为true
+③replace 替换
+④scope：接收参数
+
+调用指令来传递参数并处理：
+①在自定义的指令内部去准备接收
+指定scope，把要传递过来的值存在驼峰式命名的变量中，指定@，在调用指令传参时，就会读取该属性对应的值
+scope:{
+testName:'@'
+}
+②传递参数
+在调用指令时，指定对应的属性名称和要传递的值
+<div test-hello test-name="123"></div>
+
+15.ng自带的服务以及如何创建服务
+
+ng自带的服务有很多，常用：
+$location $window $http $scope $rootScope $interval $timeout..
+
+16.ng如何实现通信
+
+1、借助于$rootScope
+2、既然子作用域对象可以调用父作用域对象的值或者方法，就可以通过控制器之间的嵌套来实现通信
+3、事件
+父-》子
+$scope.$broadcast('eventName',args)
+
+子-》父
+$scope.$emit('eventName',args)
+
+绑定事件：
+$scope.$on('eventName',func)
+
+17.ng的通信服务
+
+$http({url:'',method:''}).success().error()
+
+简洁写法：
+$http.get()
+$http.post()
+①要求返回的数据格式是json格式
+②在发起post请求时，如果需要传参
+$http.post('url',data),需要设置请求头：
+全局设置请求头：
+app.run(function($http){
+$http.defaults.headers.post = {'Content-Type':'application/x-	www-form-urlencoded'};})
+
+18.ng自定义服务
+
+factory（返回对象） service （方法、属性）
+constant（常量服务） value（变量服务）
+
+1、factory
+app.factory('服务名称',function(){
+	return {
+         key:value
+	}
+})
+
+2、service方法
+app.service('服务名称',function(){
+//构造函数
+this.name = 'zhangsan';
+this.speak = function(){}
+
+})
+
+19.ng的依赖注入
+
+①推断式（猜测）
+app.controller('',function($scope){})
+注入器，是直接根据服务的名称，在服务的注册列表中去查找该名称所对应的服务，
+找到并实例化提供给我们使用
+特点：注入服务的顺序是无所谓的，在压缩混淆时，会出现无法查找服务的16:34 2017/6/7问题
+
+②标记式
+可以解决文件压缩后找不到服务的问题
+解决方案：给处理函数指定了$inject属性：由依赖的服务名称构成数组
+ctrFunc.$inject = ['$scope','$show']
+
+注意事项：在数组中写服务的顺序要与在创建ng对象时对应的方法中服务的顺序是要保持一致
+
+③行内式（内联）
+允许在创建ng对象指定一个数组作为参数，在数组中写上依赖的服务的名称，数组中最后一个参数必须是该ng对象对应的处理函数
+
+20.一个ng的模块可以包含哪些东西？
+控制器
+指令
+过滤器
+函数
+服务
+
+21.ng路由
+
+在ng中如何实现SPA？
+基本步骤：
+①引入angular-route.js,在创建自定义模块指定依赖ngRoute
+②指定容器 盛放代码片段 ngView
+③创建需要的代码片段
+④配置路由词典
+$routProvider.when 添加一条路由信息
+$routProvider.otherwise 处理异常
+
+
+22.实现新闻滚动
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body>div{
+            border:1px solid #000;
+            width:400px;
+            height:100px;
+            margin:0 auto;
+            position:relative;
+            overflow:hidden ;
+        }
+        body>div>div{
+            margin:0;
+            width:400px;
+            height:500px;
+            position:absolute;
+            top:0px;
+            left:0px;
+        }
+        p{
+            text-align:center;
+            line-height: 100px;
+            height:100px;
+            margin:0;
+            padding:0;
+        }
+    </style>
+</head>
+<body>
+<script src="jquery-1.11.3.js"></script>
+<script>
+    (function(){
+        var arr=[1,2,3,4,5];
+        function setNames(){
+            $("body").append("<div></div>");
+        }
+        function setNews(){
+            $("body>div").append("<div></div>");
+            for(var i=0;i<arr.length;i++){
+                var p=`
+                <p>${arr[i]}</p >
+                `;
+                $("body>div>div").append(p);
+            }
+
+        }
+        var h=0;
+        function scroll(){
+            if(h>-100*(arr.length-1)){
+            h-=100;
+            var height=h+"px";
+            $("body>div>div").css("top",height);
+            console.log(h);}
+        }
+        setNames();
+        setNews();
+        setInterval(scroll,1000);
+    })()
+</script>
+</body>
+</html>
+
+23.原型链的实现
+
+24.ng中单{}和双{}的区别
+
+25.css3浏览器兼容性问题
+
+border-radio:
+
+兼容性
+@-webkit-keyframes 名称{}   谷歌内核
+@-moz-keyframes 名称{}   火狐内核
+@-o-keyframes 名称{}        欧朋内核
+@-ms-keyframes 名称{}     ie内核
+
+css Hack
+
+js:
+标准的事件绑定方法函数为addEventListener，但IE下是attachEvent；
+2. 事件的捕获方式不一致，标准浏览器是由外至内，而IE是由内到外，
+但是最后的结果是将IE的标准定为标准
+3. 我们常说的事件处理时的event属性，在标准浏览器其是传入的，IE下由window.event获取的。
+    并且获取目标元素的方法也不同，标准浏览器是event.target，而IE下是event.srcElement
+4. 在低版本的IE中获取的日期处理函数的值不是与1900的差值，但是在高版本的IE中和标准浏览器保持了一致，获取的值也是与1900的差值。
+    比如：var year= new Date().getYear();
+5. ajax的实现方式不同，这个我所理解的是获取XMLHttpRequest的不同，IE下是activeXObject
+6. IE中不能操作tr的innerHtml
+7. 获得DOM节点的父节点、子节点的方式不同
+    其他浏览器：parentNode parentNode.childNodes
+    IE：parentElement parentElement.children
+
+
+26.前后端交互问题
+     1.前端请求数据URL由谁来写?
+
+      在开发中,URL主要是由后台来写的,写好了给前端开发者.如果后台在查询数据,需要借助查询条件才能查询到前端需要的数据时,这时后台会要求前端提供相关的查询参数，这里的查询参数也就是URL请求的参数。
+
+
+
+      2.接口文档主要由谁来写?
+
+      接口文档也是主要由后台开发者来写的,因为直接跟数据打交道的就是后台,后台是最清楚,数据库里面有什么数据,能返回什么数据.前端开发只是数据的被动接受者.所以接口文档也主要是由后台来完成的,前端只是接口文档的使用者,使用过程中,发现返回的数据不对,则需要跟后台进行商量,由后台来修改.切记 前端不要随意更改接口文档,除非在取得后台开发人员的同意的情况下.总的来讲,接口文档主要由后台来设计,修改,前端开发者起到了辅助的作用.
+
+
+      3.前端开发与后台交互的数据格式主要是什么?
+
+      主要是JSON
+,XML现在用的不多
+
+
+4.前端开发的后台交互原理？
+
+      在项目的时候，我们前后端会大概说一下接口地址，前端请求的参数，后端返回的参数，然后大家就开始写，写的差不多的时候，大家调一下接口看一下返回的数据，没问题就可以了。
+
+
+5.前端请求参数的形式
+GET和POST两种方式
+
+      对安全性不高 采用get方便
+post要比get安全
+      GET - 从指定的服务器中获取数据
+
+      POST - 提交数据给指定的服务器处理
+
+
+6.前端应该告知后台哪些有效信息,后台才能返回前端想的数据的呢?
+
+      先将要展示的页面内容进行模块划分，将模块的内容提取出来，以及方便前端的一些标志值等，将所有想要的内容和逻辑告知后端，
+后端就会去数据库里面去查找相应的数据表中去获得相应的内容，或者图片地址信息。
+URL中的参数主要是根据后台需要,
+如果后台需要一个参数作为查询的辅助条件 前端在URL数据请求时就传递参数。
+
+
+
+7.我们应该怎么把页面这些信息有效传达给后台,以及后台是如何获取到这些数据?
+
+      总的来讲:所有前端请求的URL后面的参数,都是辅助后台数据查询的.如果不需要参数,那么后台就会直接给个URL给前端.
+
+
+      8.前端应该如何回拒一些本不属于自己做的一些功能需求或任务?
+
+      在与后台打交道中,我们经常遇到这种情况,有时候明明后台来处理某个事件很简单,后台非要你来做,这时候我们应该懂得去回绝他.
+
+      原则:前端就是负责把数据展示在页面上
+发挥:这就需要我们对一个需求,一个任务的要有清晰认识了,如果对任务含糊不清,自己都没搞明白,你只能受后台摆布了.最后也会因为任务没有完成而备受责难了.
+
+
+      9.当前端在调用数据接口时,发现有些数据不是我们想要的,那么前端应该怎么办呢或者怎么跟后台讲呢?
+
+      首先要把请求的URL和返回的数据以及在页面的展示的情况给跟后台看,这样有理有据,后台开发人员是不会说什么的,否则,后台会很不耐烦的,甚至骂你的可能都有,本身做后台比较难,尤其在查询数据,取数据,封装数据方面都比较难处理.
+
+
+      10.为什么需要在请求的时候传入参数？
+
+      因为后台在查询数据库的时候需要条件查询。
+
+27.如何让js文件在需要的时候才使用
+
+使用require在合适的地方引入
+
+28.http状态码问题
+
+100-199用于指定客户端相应的某些动作
+200-299用于表示请求成功
+300-399用于已经移动的文件并且常包含在定位头信息中指定新的地址信息
+400-499用于指出客户端的错误
+500-599用于支持服务器错误
+
+29.前端优化
+
+      减少Http请求
+
+      使用图片地图
+
+      使用CSS Sprites
+
+      合并JS和CSS文件
+
+      这个是由于浏览器对同一个host有并行下载的限制,http请求越多,总体下载速度越慢
+
+      2.使用CDN(内容发布网络):当页面中有很多资源的时候,可以从不同的服务中去读取,
+	同时可以提高并行下载速度
+
+      3.添加http Expires头:为图片视频之类很少改变的资源设置长的Expires时间将直接减少http请求
+
+      如果资源设置了Expires头为将来的某个时间,下次访问时候浏览器发现资源还没有过期,会直接从缓存中读取,不会再次产生http请求
+
+      另外一个有点类似的概念是条件Get请求,某些资源比如JS文件,如果我们总是需要最新的JS文件,那么可以设置条件Get请求去服务端验证本地的资源是否需要更新.这种情况下浏览器会向Server发送一个http请求,如果资源没有更新,会返回一个http 304的response,如果资源跟新,则重新下载资源:
+
+
+
+条件Get请求每次都会产生一个304的请求
+
+      4.压缩组件:在Server端对Response资源进行压缩再传给浏览器,一般使用GZIP
+
+5.将CSS放再顶部: 能加快页面内容显示,并且能避免页面产生白屏
+
+6.将JS放在底部
+JS会阻塞对其后面内容的呈现
+JS会阻塞对其后面内容的下载
+
+7.避免CSS表达式
+
+8.将JS,CSS放在外部文件中
+
+      9.通过使用Keep-Alive和较少的域名来减少DNS查找
+
+      10.精简JS和CSS文件
+
+11.寻找一种避免重定向的方法
+
+12.移除重复的脚本
+
+      13.配置Etag
+
+      14.确保Ajax请求遵守性能知道,必要时候应具备长久的expires头
+
+30.javascript什么时候会冒泡、什么时候要阻止冒泡？
+
+当你使用事件冒泡时，子级元素先触发，父级元素后触发，即p先触发，div后触发。
+
+js:e.target
+jq:event.stopPropagation();
+
+31.MVC模式
+
+首先控制器接收用户的请求，并决定应该调用哪个模型来进行处理，然后模型用业务逻辑来处理用户的
+请求并返回数据，最后控制器用相应的视图格式化模型返回的数据，并通过表示层呈现给用户
+
+32.面向对象
+
+面向对象可以把程序中的关键模块都视为对象，而模块拥有属性及方法。这样我们如果把一些属性
+及方法封装起来，日后使用将非常方便，也可以避免繁琐重复的工作。接下来将为大家讲解在JS中面
+向对象的实现。
+
+工厂模式
+
+工厂模式是软件工程领域一种广为人知的设计模式，而由于在ECMAScript中无法创建类，
+因此用函数封装以特定接口创建对象。其实现方法非常简单，也就是在函数内创建一个对象，
+给对象赋予属性及方法再将对象返回即可。
+
+function createBlog(name, url) {
+  var o = new Object();
+  o.name = name;
+  o.url = url;
+  o.sayUrl= function() {
+    alert(this.url);
+  }
+  return o;
+}
+
+var blog1 = createBlog('wuyuchang', 'http://www.jb51.net/');
+
+构造函数模式
+
+ECMAScript中构造函数可以创建特定类型的对象，类似于Array、Date等原生JS的对象。其实现方法如下：
+
+function Blog(name, url) {
+  this.name = name;
+  this.url = url;
+  this.alertUrl = function() {
+    alert(this.url);
+  }
+}
+
+var blog = new Blog('wuyuchang', 'http://www.jb51.net/');
+console.log(blog instanceof Blog);  // true， 判断blog是否是Blog的实例，即解决了工厂模式中不
+
+这个例子与工厂模式中除了函数名不同以外，细心的童鞋应该发现许多不同之处：
+函数名首写字母为大写　　（虽然标准没有严格规定首写字母为大写，但按照惯例，构造函数的首写字母用大写
+没有显示的创建对象
+直接将属性和方法赋值给了this对象
+没有return语句
+使用new创建对象
+能够识别对象（这正是构造函数模式胜于工厂模式的地方）
+　　构造函数虽然好用，但也并非没有缺点，使用构造函数的最大的问题在于每次创建实例的时候都要重新创建一次方法（理论上每次创建对象的时候对象的属性均不同，而对象的方法是相同的），然而创建两次完全相同的方法是没有必要的，因此，我们可以将函数移到对象外面（也许有些童鞋已经看出缺点，嘘！）。
+
+原型模式
+
+我们创建的每个函数都有prototype（原型）属性，这个属性是一个指针，指向一个对象，而这个对象的用途是包含可以由特定类型的所有实例共享的属性和方法。使用原型对象的好处就是可以让所有对象实例共享它所包含的属性及方法。
+
+function Blog() {
+}
+
+Blog.prototype.name = 'wuyuchang';
+Blog.prototype.url = 'http://tools.jb51.net/';
+Blog.prototype.friend = ['fr1', 'fr2', 'fr3', 'fr4'];
+Blog.prototype.alertInfo = function() {
+  alert(this.name + this.url + this.friend );
+}
+
+// 以下为测试代码
+var blog = new Blog(),
+  blog2 = new Blog();
+blog.alertInfo();  // wuyuchanghttp://tools.jb51.net/fr1,fr2,fr3,fr4
+blog2.alertInfo();  // wuyuchanghttp://tools.jb51.net/fr1,fr2,fr3,fr4
+
+blog.name = 'wyc1';
+blog.url = 'http://***.com';
+blog.friend.pop();
+blog2.name = 'wyc2';
+blog2.url = 'http://+++.com';
+blog.alertInfo();  // wyc1http://***.comfr1,fr2,fr3
+blog2.alertInfo();  // wyc2http://+++.comfr1,fr2,fr3
+
+原型模式也不是没有缺点，首先，它省略了构造函数传递初始化参数这一环节，结果所有实例在默认情况下都取得了相同的属性值，这样非常不方便，但这还是不是原型的最大问题，原型模式的最大问题在于共享的本性所导致的，由于共享，因此因此一个实例修改了引用，另一个也随之更改了引用。因此我们通常不单独使用原型，而是结合原型模式与构造函数模式。
+
+混合模式（原型模式 + 构造函数模式）
+
+function Blog(name, url, friend) {
+  this.name = name;
+  this.url = url;
+  this.friend = friend;
+}
+
+Blog.prototype.alertInfo = function() {
+  alert(this.name + this.url + this.friend);
+}
+
+var blog = new Blog('wuyuchang', 'http://tools.jb51.net/', ['fr1', 'fr2', 'fr3']),
+  blog2 = new Blog('wyc', 'http://**.com', ['a', 'b']);
+
+blog.friend.pop();
+blog.alertInfo();  // wuyuchanghttp://tools.jb51.net/fr1,fr2
+blog2.alertInfo();  // wychttp://**.coma,b
+
+混合模式中构造函数模式用于定义实例属性，而原型模式用于定义方法和共享属性。每个实例都会有自己的一份实例属性，但同时又共享着方法，最大限度的节省了内存。另外这种模式还支持传递初始参数。优点甚多。这种模式在ECMAScript中是使用最广泛、认同度最高的一种创建自定义对象的方法。
+
+动态原型模式
+
+动态原型模式将所有信息封装在了构造函数中，而通过构造函数中初始化原型（仅第一个对象实例化时初始化原型），这个可以通过判断该方法是否有效而选择是否需要初始化原型。
+
+function Blog(name, url) {
+  this.name = name;
+  this.url = url;
+
+  if (typeof this.alertInfo != 'function') {
+    // 这段代码只执行了一次
+    alert('exe time');
+    Blog.prototype.alertInfo = function() {
+      alert(thia.name + this.url);
+    }
+  }
+}
+
+var blog = new Blog('wuyuchang', 'http://tools.jb51.net'),
+  blog2 = new Blog('wyc', 'http:***.com');
+
+可以看到上面的例子中只弹出一次窗，'exe time'，即当blog初始化时，这样做blog2就不在需要初始化原型，对于使用这种模式创建对象，可以算是perfect了。
+
+33.jQuery选择器 和原生DOM选择器  返回值有什么区别
+
+jQuery选择器 返回值是jQuery对象
+原生DOM选择器是DOM对象
+
+34.HTTP请求方法
+
+GET  请求获取Request-URI所标识的资源
+POST   在Request-URI所标识的资源后附加新的数据
+HEAD   请求获取由Request-URI所标识的资源的响应消息报头
+PUT   请求服务器存储一个资源，并用Request-URI作为其标识
+DELETE  请求服务器删除Request-URI所标识的资源
+TRACE   请求服务器回送收到的请求信息，主要用于测试或诊断
+CONNECT 保留将来使用
+OPTIONS 请求查询服务器的性能，或者查询与资源相关的选项和需求
+
+35. 
+
+1.减少HTTP请求
+2.把CSS放顶部,把JS放底部
+3.Gzip压缩代码
+4.js尽量封装代码,避免重复
+
+36.跨域问题
+
+利用<script>标签没有跨域限制(不受同源策略限制)的“漏洞”来达到与第三方通讯的目的。
+当需要通讯时，本站脚本创建一个<script>元素，地址指向第三方的API网址，
+    形如：     <script src="http://www.example.net/api?		param1=1&param2=2">
+	    </script>
+并提供一个回调函数来接收数据（函数名可约定，或通过地址参数传递）。
+第三方产生的响应为json数据的包装（故称之为jsonp，即json padding），
+    形如：     callback({"name":"hax","gender":"Male"})     这样浏览器会调用callback函数，
+并传递解析后json对象作为参数。
+本站脚本可在callback函数里处理所传入的数据。
+在js中，我们不可以直接用XMLHttpRequest请求不同域上的数据，但在页面上引入不同域上的js脚本文件却是可以的，jsonp正是利用这个特性来实现的
+
+37.Canvas绘图在PC端所带来的兼容性问题有哪些
+
+explorerCanvas    兼容IE6,7,8
+
+38.工程化的理解
+
+    何为工程化
+    所有能降低成本，并且能提高效率的事情的总称为工程化。
+
+    在实际的工作和产品研发中，我不觉得还有什么事情比降低成本，提高效率更迫切的事情。我更不认同工程化只是项目经理，技术 Leader 去研究和推广的事情。每个团队都是不一样，技术栈不一样，产品不一样，工作环境背景不一样。大公司有大团队，多部门合作。小公司有小团队，各种职能配合更密切，或者你身兼数职，但是并不妨碍工程化的推进，你作为团队的一员，非常有义务和必要一起推进工程化，找到符合你们团队的工作习惯和规范。
+
+    因为，工程化的推进只是为了提高效率和降低成本。这里说的效率和成本，并不只是公司层面，还包括个人。良好的工程化，能降低沟通成本，实现更好的协同，节省开发和测试人员的重复劳动，降低发布的常见问题等等，经过有效实践，工程化的推广还能极大地减少加班的时间。
+
+    怎么做
+    规范化
+    文档。需求文档、设计文档、系统设计、测试单、项目报告。
+    工具。开发语言选型，开发工具，协同工具，测试工具，发布工具。
+    代码规范。javascript，css，html，技术文档。
+    质量规范。功能方便，是否可拓展，是否满足 RESTFul，是否安全性满足
+    流程化
+    软件开发常见流程
+    职责和协同
+    目标明确的版本计划
+    敏捷开发
+    自动化
+    流程的自动化。即人员协同的自动化
+    代码开发自动化，去掉重复劳动
+    自动化单元测试
+    UI/API/兼容性 自动化测试
+    自动化部署
+    自动化问题反馈
+    创新
+    发掘其他团队的优秀方法
+    实践敏捷开发
+    多交流，多观察业界
+    WEB 前端开发工程化
+    工程化应该出现在工作的任何环节，WEB 前端开发过程的工程化发展得尤为迅速。
+
+    把 Grunt、gulp、Nodejs 的技能应用到前端开发，实际上就是前端工程化的一部分。移动互联网的发展，跨平台服务的一致性体验，和要求快速迭代的互联网产品对前端领域提出了更高的要求，前端三板斧已经不能满足了。然后你看到了这几年百花齐放的场景。
+
+    前端语言、框架
+    CSS 模块化方案：LESS/ SASS
+    JS 模块化方案：AMD/CommonJS/UMD/ES6 Modlue
+    HTML 模板引擎：baiduTemplate(百度)artTemplate（腾讯）juicer（淘宝）doT     tmpl handlebars easyTemplate underscoretemplate mustache kissytemplate
+    前端集成框架 Bootstrap、Gumby、 Skeleton、Foundation
+    AngularJS
+    ReactJS
+    VueJS
+    Meteor
+    还有 WEEX
+    (排名不分先后)
+    前端构建工具
+    webpack
+    Grunt
+    gulp
+    yeoman
+    FIS
+    athena
+    tmt-workflow
+    jdf
+    所以在实际前端构建流程里面，你会发现以下的流程。
+
+    代码优化
+    LESS、SASS 自动编译
+    Autoprefixer 前缀自动补全
+    自动生成图片 CSS 属性，width & height
+    CSS Sprite 雪碧图合成
+    JS、CSS、HTML 压缩
+    按需加载
+    延迟加载
+    解决方案
+
+    项目初始化。如果你用了 yeoman 或者 HTML5 Boilerplate，你就懂我说什么
+作用域污染。前端自带问题。
+    eslint 验证，代码验证验证
+    Retina @2x & @3x 自动生成适配
+    px -> rem 兼容适配方案
+    智能 WebP 解决方案
+    非覆盖式升级，文件指纹
+    CDN 文件缓存，缓存更新
+    自动化测试
+    调试和部署
+    监听文件变动，自动刷新浏览器 (LiveReload)
+    文件指纹，hash 值生成
+    FTP 发布部署
+    ZIP 项目打包
+    自动化测试
+    Mocha
+    Jasmine
+    travis-ci
+    Jenkins
+    以上我只是列出了一些关键要点，或许你们还有更加厉害的方式来提升效率和降低成本，软件开发鼓励分享和交流。我也总能从大公司的技术交流会议学到不少技术方案和思想。不管是大团队，还是小团队工程化的推广都应该是工作环节中的一部分。
+1.jQuery选择器 和原生DOM选择器  返回值有什么区别
+
+3.Canvas绘图在PC端所带来的兼容性问题有哪些
+4.用户登录后端是怎么认证的。
+5.你对原型链的理解
+
+7.你对webpack中模块的理解
+
+9.说一下你对CSS编译的理解
+
+10、MVC与MVVM区别？
+　　在MVC里，View是可以直接访问Model的！从而，View里会包含Model信息，不可避免的还要包括一些业务逻辑。 MVC模型关注的是Model的不变，所以，在MVC模型里，Model不依赖于View，但是 View是依赖于Model的。不仅如此，因为有一些业务逻辑在View里实现了，导致要更改View也是比较困难的，至少那些业务逻辑是无法重用的。
+
+　　MVVM在概念上是真正将页面与数据逻辑分离的模式，它把数据绑定工作放到一个JS里去实现，而这个JS文件的主要功能是完成数据的绑定，即把model绑定到UI的元素上。

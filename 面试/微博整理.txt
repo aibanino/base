@@ -1,0 +1,94 @@
+1.什么是盒子模型？
+在网页中，一个元素占有空间的大小有几个部分构成，其中包括元素的内容（content），外边距（margin），
+内边距（padding），边框（border）四个部分，这四个部分占有的空间中，有的用来显示区域的内容，
+有的用来隔开区域或相邻的区域，这4部分构成了css元素中的盒子模型
+
+2.行内元素有哪些？块级元素有哪些？空元素（void）有哪些？
+  行内元素：a span input b img strong select label em button textarea
+  块级元素：div ul li dl dt dd p h1-h6 blockquote
+  空元素：即没有内容的html内容，br meta hr link img input
+
+3.css实现垂直水平居中
+html内容：
+<div id="d1">
+        <div id="d2">
+            xxx
+        </div>
+</div>
+css内容：
+        #d1{
+         position: relative;
+         background-color: yellow;
+		 height:200px;
+        }
+        #d2{
+            position: absolute;
+            top:50%;
+            left: 50%;
+        }
+
+4.描述一下src与href的区别？
+href是指向网络资源所在位置，建立起和当前元素（锚点）或当前文档的（链接）之间的链接，用于超链接
+src是指向外部资源的位置，指向的内容会嵌入到文档中当前标签所在的位置；在请求src资源的时候，会将
+指向的资源下载并应用到文档中，例如JS的脚本，img图片和frame等元素。当浏览器解析到该元素时，会暂停
+其他资源的下载处理，直到将该资源加载，编译，执行完毕，图片和框架等元素也如此，类似于将所指向资源
+嵌入到当前标签内。这也是为什么将JS脚本放在底部而不是头部。
+
+5.什么是CSS hack？
+一般来说，就是针对不同浏览器来说写不同的CSS，就是CSS Hack
+IE浏览器Hack分为3种，条件Hack，属性级Hack，选择符Hack
+条件Hack：
+<!--[if IE]>
+<style>
+	.test{color:red;}
+</style>
+<![endif]-->
+
+属性Hack：
+.test{
+	color:red;/For IE8+/
+	color:yellow;/For IE7 and earlier/
+	_color:green;/For IE6 and earlier/
+}
+
+选择符Hack：
+html.test{color:red;}/For IE6 and earlier/
+html.test{color:red;}/For IE7/
+
+6.简述同步和异步的区别？
+同步就是阻赛模式，异步就是非组赛模式
+同步就是指一个进程在执行请求时，若需要一段时间返回信息，那么这个进程将会一直等待下去，直到收到
+返回信息才结束；
+异步是指进程不需要一直等下去，而是继续执行下面的操作，不管其他进程的状态，当有消息返回时，系统
+会通知进程进行处理，这样可以提高执行的效率。
+
+7.px和em的区别？
+px和em都是长度单位。px是固定的数值，指定多少就是多少，计算比较容易，em的值不是固定的，会继承父级
+元素字体的大小。
+浏览器默认字体高是16px，所以未经调整的浏览器都符合1em=16px； 12px=0.75em  1px=1/16em；
+
+8.什么叫优雅降级和渐进增强？
+渐进增强：progressive enhancement
+针对低版本浏览器进行构建页面，保证最基本的功能，然后再针对高级浏览器，进行效果，交互和追加功能达
+到更好的用户体验。
+优雅降级： graceful degradation
+一开始就构建完整的功能，在针对低版本进行兼容
+
+区别：
+a 优雅降级是从复杂的现状开始，并试图减少用户体验的供给
+b 渐进增强则是从一个非常基础的，能够起作用的版本开始，并不断扩充，以适应未来环境的需要
+c 降低意味着往回看（功能衰减），增强则意味着往前看，并保证其根基处于安全地带
+
+9.浏览器的内核是什么？
+IE：trident内核；
+Firefox:gecko 内核
+Safari:webkit内核
+Opera:以前是presto内核，现在是google，
+Chrome的Blink内核（基于webkit，google,opera Software共同开发）
+
+Javascript部分
+1.怎样添加，移除，移动，复制，创建和查找节点
+创建：createDocumentFragment();//创建一个Dom片段
+      createElement();//创建一个具体的元素
+      createTextNode();//创建一个文本节点
+

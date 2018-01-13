@@ -1,0 +1,103 @@
+﻿前端框架篇
+
+一 谈谈对MVC, MVVM的理解?
+
+MVC: model(模型) - view(视图) - controller(控制器)
+web中的MVC框架 都是基于请求和响应协同工作的 当服务端的model发生改变时 客户端的view需要重新请求或刷新才会更新
+view(视图)传送指令到controller(控制器)  controller接受指令通知model(模型)改变状态 然后返回controller controller收到返回的数据在重构渲染view
+这样就非常被动 让model很难符合复杂多变的view.
+
+MVVM: view(视图) - viewModel(视图模型) - model(模型)
+而MVVM相比于MVC 就灵活得多 view的指令已出现 立刻viewModel就自动改变 而model变化时viewModel也会自动改变
+其实就是让model和view解耦 利用双向绑定 让viewModel动态变化
+因为交互都发生在viewModel中 所以还可以更高效的使用模型 
+还可以将viewModel用于多个视图 而不改变viewModel的逻辑
+
+
+二 JQuery 对于比 三大主流框架
+
+JQuery主要是对DOM操作进行封装 提供了很多方便的选择器 将Ajax也进行了封装.
+相对主流框架 JQuery应该算是超轻量级 
+JQuery做一些普通的网页搓搓有余 但是如果涉及到网页应用就差强人意了
+(JQuery插件 表单验证插件Validation 表单插件Form 模态框插件SimpleModal 管理cookie的插件coolkie)
+
+其他三大框架
+首先就是VUE和React 都有虚拟DOM 响应式和组件化的视图组件 
+把主要的功能都放在核心库中 其他功能交给相关库 也就是为什么形成了不同的技术栈 
+react是单向数据绑定 VUE是不同组件间强制使用单向数据流
+VUE的虚拟DOM更为轻量 但是React的 React Native能让你直接开发兼容IOS/Android的原生应用.
+
+
+对比Angular的话 VUE和Angular都有双向数据绑定  指令也有些许相似
+但VUE有依赖追踪的观察系统 并且异步队列更新
+不过Angular主要是有强大的后盾 社区比较好
+然后依赖注入是它主要的优势 不同需求 可以注入不同的服务来实现功能. 
+而Vue React则需要自己规划组织代码
+
+如果要做成SPA 并且对服务端渲染或者原生移动端有硬需求的话 React更有优势.
+
+
+三 什么是前后端分离
+
+就是前后端只通过数据接口来交流 让前端不需要依赖后端就可以进行开发和测试.
+
+四 什么是SPA
+
+单页面web应用 就是一个web页面在初始化加载后 不会因为用户的操作进行重新加载或者跳转 而是利用js动态变换HTML的内容 
+
+五 介绍一下你对webpack的理解，和gulp有什么不同
+
+webpack是一款模块加载兼打包工具，它可以将js、jsx、coffee、样式sass、less，图片等作为模块来使用和处理。它的loaders可以调用外部的脚本或工具对各种各样格式的文件进行处理,最后生成一个优化并且合并后的静态资源。这点是gulp做不到的
+gulp是前端开发的自动化工具 能够优化前端工作流程 比如文件合并压缩.
+(webpack打包优化 去除不必要的组件 提取第三方库 代码压缩 代码分割 设置缓存hash)
+
+六 说一下vuex的使用方法 
+不要为了vuex而使用vuex 两个场景下比较适合
+1, 在应用比较复杂 并需要多个组件的状态共享 且这些组件关联度较低 共享数据比较困难的时候
+2, 路由间的复杂数据传递 路由跳转传递参数非常复杂的时候
+vuex其实是一种设计思想 首先它是把所有组件的所有状态和数据放在一个统一的空间去管理State.
+然后State中的数据可以方便的映射到我们的组件上去渲染组件.
+当组件数据发生改变它就可以dispath一个Actions
+Actions可以做一些异步操作(与后端的交互)然后Actions会commit Mutations(我们的组件也可以直接commit一个Mutations)
+commit Mutations是唯一可以修改state的途径 其他任何方式修改state的都是非法的 Vuex这样设计就是为了state的修改可以预测
+当state的数据被改变后 vue就会自动的又渲染我们的组件
+
+七 vue的组件复用机制
+vue实现组件复用 主要是三个api
+props 允许外部数据传入 events可以监听内部派发的事件 
+slot 可以直接插入其他组件
+有了这三个api 我们在编写组件是就可以留意是否要复用组件
+比如scroll组件 明显就会复用很多 我们在编写时就可以定义好需要接收的数据 需要派发给外面的事件 以及预留插槽.
+
+八 什么是express?
+轻量灵活的node.js Web应用框架 主要是可以你快速搭建web应用
+
+九 node.js的中间件是什么?
+我的理解是这样的，中间件就是类似于一个过滤器的东西，在客户端和应用程序之间的一个处理请求和响应的的方法。
+Express框架实际上是依赖Connect创建的 Connect是Node.js提供的一个模块
+可以用来创建中间件的一个框架 它自身已经包装了Node的HTTP模块的Server以及Server的req和res的对象
+它干的活其实就是处理请求，然后响应客户端或是让下一个(next)中间件继续处理
+
+十 Vue数据绑定的原理
+核心方法是通过一个叫object.defineProperty()方法来实现劫持
+这个方法在对象上定义一个新属性 修改一个现有属性  并返回这个对象
+1 实现一个数据监听器Observer 对数据对象所有属性进行监听 如有变动可拿到最新值并通知订阅者
+2 实现一个指令解析器compile 对每个元素节点的指令进行扫描和解析 根据指令模板替换数据 以及绑定相应的更新函数
+3 实现一个watcher 用于连接observer和compile 能够接收订阅者的每个属性变动通知 执行指令绑定的回调函数 从而更新视图
+
+十一 Vue 父子组件 兄弟组件通信问题
+$emit 派发一个事件 @监听一个派发的事件 我们就可以做一个简单的子向父通信
+子组件props声明预期数据 父组件可以用预期声明的名称在子组件标签上传入数据
+兄弟组件之间通过创建vue实例BUS 作为事件总程 如果复杂 要用vuex
+
+十二 Vue Router 获取自定义参数
+Router 配置时需要动态获取的参数用 :备注
+Router-link to标签 就可以传递动态参数了
+
+十三 Vue-cli 脚手架如何自定义
+就是在工程目录下 配置package.json文件
+
+十四 vue router中 go() push() replace()
+push()会像history栈添加一个记录
+replace() 替换当前history记录
+go() 通过参数 去指定的history
